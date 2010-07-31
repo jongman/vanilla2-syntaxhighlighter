@@ -11,6 +11,18 @@ $PluginInfo['SyntaxHighlighter'] = array(
 class SyntaxHighlighterPlugIn extends Gdn_Plugin {
 
     protected $Brushes = Array("Python", "Cpp", "Java", "Css");
+    public static $PrevFormatter = NULL;
+
+    public function Format($Html) {
+        $Html = preg_replace("/\[code lang=([a-z]+)\](.+)\[\/code\]/U", '<pre class="brush: $1"><code>$2</code></pre>', $Html);
+        if(is_null(self::$PrevFormatter)) return Gdn_Format::Display($Html);
+        return self::$PrevFormatter->Format($Html);
+    }
+
+    protected function InstallFormatter() {
+        self::$PrevFormatter = Gdn::Factory("HtmlFormatter");
+        Gdn::FactoryInstall("HtmlFormatter", "SyntaxHighlighterPlugIn", __FILE__, Gdn::FactorySingleton);
+    }
 
     public function Base_Render_Before(&$Sender) {
 
@@ -21,6 +33,7 @@ class SyntaxHighlighterPlugIn extends Gdn_Plugin {
         $Sender->Head->AddCss($this->GetResource("SyntaxHighlighter.css", FALSE, FALSE));
 
         $this->AddBrushes($Sender, $this->Brushes);
+        $this->InstallFormatter();
     }
     protected function AddBrushes(&$Sender, $Languages) {
         foreach($Languages as $Lang) {
