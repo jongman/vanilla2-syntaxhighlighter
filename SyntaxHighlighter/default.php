@@ -14,7 +14,7 @@ class SyntaxHighlighterPlugIn extends Gdn_Plugin {
     public static $PrevFormatter = NULL;
 
     public function Format($Html) {
-        $Html = preg_replace("/\[code lang=([a-z]+)\](.+)\[\/code\]/U", '<pre class="brush: $1"><code>$2</code></pre>', $Html);
+        $Html = preg_replace("/\[code ([a-z]+)\](.+)\[\/code\]/U", '<pre class="brush: $1"><code>$2</code></pre>', $Html);
         if(is_null(self::$PrevFormatter)) return Gdn_Format::Display($Html);
         return self::$PrevFormatter->Format($Html);
     }
