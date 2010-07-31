@@ -6,14 +6,8 @@ This is a plugin for [Vanilla 2](http://vanillaforums.org) for using [SyntaxHigh
 2. Enable the plugin.
 3. Texts which look like
 
-    &lt;pre class="brush: cpp"&gt;
+    &lt;code lang="cpp"&gt;
     cpp code
-    &lt;/pre&gt;
-
-or
-
-    [code cpp]
-    some cpp code
-    [/code]
+    &lt;/code&gt;
 
 will be highlighted. Enjoy.

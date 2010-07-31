@@ -1,11 +1,11 @@
 $(function() {
-    $("pre").each(function() {
-        if($(this).hasClass("brush:")) {
-            //$(this).children("br").replaceWith("\n");
-            var $this = $(this);
-            var $code = $this.children("code");
-            $code.children("br").replaceWith("\n");
-            $this.text($code.text());
+    $("code").each(function() {
+    var $this = $(this);
+        if($this.attr("lang") !== undefined) {
+            $this.children("br").replaceWith("\n");
+            var raw = $this.html();
+            var lang = $this.attr("lang");
+            $this.replaceWith('<pre class="brush: ' + lang + '">' + raw + '</pre>');
         }
     });
     SyntaxHighlighter.all();
